@@ -1,0 +1,67 @@
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<!-- Define a table to view existing items -->
+<h1>Tracked Items</h1>
+<!-- Check to see if any items were provided in the context -->
+{% if a_LatestItemList %} 
+<!-- If items were provided in the context, load a table -->
+<table>
+    <tr>
+        <!-- Table headers outlining data fields -->
+        <th>Item Name</th>
+        <th>Storage Location</th>
+        <th>Current Weather</th>
+        <th>Inventory Count</th>
+        <th>Actions</th>
+    </tr>
+    {% for o_Item in a_LatestItemList %}
+    <!-- Iterate through the data provided in the ctx -->
+    <tr>
+        <!-- Dynamically create rows for data provided in ctx -->
+        <td>{{ o_Item.s_Name }}</td>
+        <td>{{ o_Item.s_Location }}</td>
+        <td>{{ o_Item.s_Weather }}</td>
+        <td>{{ o_Item.i_InventoryCount }}</td>
+        <td>
+            <form action="{% url 'tracker:edit' o_Item.id %}" method="post">
+                {% csrf_token %}
+                <button name="edit" value="edit">Edit</button>
+            </form>
+            <form action="{% url 'tracker:delete' o_Item.id %}" method="post">
+                {% csrf_token %}
+                <button name="delete" value="delete">Delete</button>
+            </form>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<!-- If no items have been provided in the context, load this msg -->
+    <p>No Items have been added.</p>
+{% endif %}
+
+
+<form action="{% url 'tracker:create'%}" method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend><h1>Add an item</h1></legend>
+        <label for="itemName">Item Name: </label>
+        <input type="text", name="s_Name", id="s_Name">
+        <br><br>
+        <label>Item Location:</label>
+        <br>
+        <select name="s_Location", id="s_Location">
+            {% for s_City in t_CityList %}
+            <option value="{{ s_City.1 }}">{{ s_City.1 }}</option>
+            {% endfor %}
+        </select>
+
+        <input type="submit" value="Create">
+    </fieldset>
+    
+</form>

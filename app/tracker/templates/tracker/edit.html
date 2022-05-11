@@ -1,0 +1,23 @@
+<!-- Create a similar form to the create one, but values are prefilled -->
+<form action="{% url 'tracker:update' o_Item.id %}" method="post">
+    <!-- Load csrf token -->
+    {% csrf_token %}
+    <fieldset>
+        <legend><h1>Editing {{o_Item.s_Name}} </h1></legend>
+        <label for="itemName">Item Name: </label>
+        <input type="text", name="s_Name", id="s_Name", value="{{ o_Item.s_Name }}">
+        <br><br>
+        <label>Item Location:</label>
+        <br>
+        <select name="s_Location", id="s_Location">
+            {% for s_City in t_CityList %}
+            {% if s_City.1 == o_Item.s_Location %}
+                <option value="{{ s_City.1 }}" selected="selected">{{ s_City.1 }}</option>
+            {% else %} 
+                <option value="{{ s_City.1 }}">{{ s_City.1 }}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+        <input type="submit" value="Update">
+    </fieldset>  
+</form>
