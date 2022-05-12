@@ -42,8 +42,8 @@ class ItemManager(models.Manager):
     #                       item model
     # 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-    def createItem(self, s_Name, s_Location, d_DateAdded):
-        o_Item = self.create(s_Name=s_Name, s_Location=s_Location, d_DateAdded=d_DateAdded)
+    def createItem(self, s_Name, s_Location, i_InventoryCount, d_DateAdded):
+        o_Item = self.create(s_Name=s_Name, s_Location=s_Location, i_InventoryCount=i_InventoryCount, d_DateAdded=d_DateAdded)
         o_Item.setWeather()
         return o_Item
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -68,6 +68,7 @@ class Item(models.Model):
     )
     s_Weather   = models.CharField(max_length=200, default="ERROR")
     d_DateAdded = models.DateTimeField('date added')
+    i_InventoryCount = models.PositiveIntegerField(default=0)
     
     def setWeather(self):
         # Note: Typically, I'd make this secret, but since the app 

@@ -12,7 +12,9 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from datetime import datetime
 from django.contrib import messages
-
+from django.conf import settings
+from django.http import HttpResponse, Http404
+import os
 # Local imports
 from .models import Item, CITY_CHOICES
 
@@ -47,8 +49,9 @@ def create(request):
     # Get name and location from the html form
     s_Name      = request.POST["s_Name"]
     s_Location  = request.POST.getlist("s_Location")[0]
+    i_InventoryCount = int(request.POST["i_InventoryCount"])
     # Create a new object based on the information
-    o_CreatedItem = Item.objects.createItem(s_Name, s_Location, datetime.now())
+    o_CreatedItem = Item.objects.createItem(s_Name, s_Location, i_InventoryCount, datetime.now())
     # Save the item in the database
     o_CreatedItem.save()
     # messages.add_message(request, messages.INFO, 'Hello world.')
@@ -83,11 +86,13 @@ def update(request, pk):
     # Get the updated values from HTML form
     s_Name      = request.POST["s_Name"]
     s_Location  = request.POST.getlist("s_Location")[0]
+    i_InventoryCount = int(request.POST["i_InventoryCount"])
     # Load the item
     o_Item = get_object_or_404(Item, pk=pk)
     # Rewrite the item data
     o_Item.s_Name       = s_Name
     o_Item.s_Location   = s_Location
+    o_Item.i_InventoryCount = i_InventoryCount
     o_Item.setWeather()
     o_Item.save() 
     # Reload the index
@@ -105,4 +110,19 @@ def delete(request, pk):
     # Delete the item
     o_Item.delete()
     # Reload the index page
+    return index(request)
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# Function Name: export
+# 
+# Function Description: Exports all product data to csv
+# 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+def export(request):
+    a_LatestItemList    = Item.objects.order_by("-d_DateAdded")
+    s_CSVOutput = "Item Name, Item Location, Inventory Count,"
+    for o_Item in a_LatestItemList:
+        s_CSVOutput += f"\n{o_Item.s_Name},{o_Item.s_Location},{o_Item.i_InventoryCount},"
+    print(s_CSVOutput)
+    
     return index(request)

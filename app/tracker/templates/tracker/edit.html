@@ -18,6 +18,16 @@
             {% endif %}
             {% endfor %}
         </select>
+        <br><br>
+        <label>Inventory Count:</label>
+        <select name="i_InventoryCount", id="i_InventoryCount">
+            {% with ''|center:1000 as range %}
+                {% for _ in range %}
+                <option value="{{ forloop.counter }}">{{ forloop.counter }}</option>
+                {% endfor %}
+            {% endwith %}
+        </select>
+        <br><br>
         <input type="submit" value="Update">
     </fieldset>  
 </form>

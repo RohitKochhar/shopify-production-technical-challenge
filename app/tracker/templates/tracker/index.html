@@ -40,6 +40,10 @@
     </tr>
     {% endfor %}
 </table>
+<form action="{% url 'tracker:export' %}" method="post">
+    {% csrf_token %}
+    <button name="delete" value="delete" type="submit">Export</button>
+</form>
 {% else %}
 <!-- If no items have been provided in the context, load this msg -->
     <p>No Items have been added.</p>
@@ -60,7 +64,17 @@
             <option value="{{ s_City.1 }}">{{ s_City.1 }}</option>
             {% endfor %}
         </select>
-
+        <br><br>
+        <label>Inventory Count:</label>
+        <br>
+        <select name="i_InventoryCount", id="i_InventoryCount">
+            {% with ''|center:1000 as range %}
+                {% for _ in range %}
+                <option value="{{ forloop.counter }}">{{ forloop.counter }}</option>
+                {% endfor %}
+            {% endwith %}
+        </select>
+        <br><br>
         <input type="submit" value="Create">
     </fieldset>
     
