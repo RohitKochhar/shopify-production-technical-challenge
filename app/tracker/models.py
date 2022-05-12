@@ -46,12 +46,6 @@ class ItemManager(models.Manager):
         o_Item = self.create(s_Name=s_Name, s_Location=s_Location, i_InventoryCount=i_InventoryCount, d_DateAdded=d_DateAdded)
         o_Item.setWeather()
         return o_Item
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-    # Function Name: deleteItem
-    # 
-    # Function Description: Deletes item from database
-    # 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 # --------------------------------------------------------
 # Class Name: Item
