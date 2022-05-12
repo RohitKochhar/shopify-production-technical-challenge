@@ -15,6 +15,7 @@ from django.contrib import messages
 from django.conf import settings
 from django.http import HttpResponse, Http404
 import os
+import mimetypes
 # Local imports
 from .models import Item, CITY_CHOICES
 
@@ -120,9 +121,25 @@ def delete(request, pk):
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 def export(request):
     a_LatestItemList    = Item.objects.order_by("-d_DateAdded")
-    s_CSVOutput = "Item Name, Item Location, Inventory Count,"
+    s_CSVOutput = "Item Name, Item Location, Inventory Count, Date Added to Tracking"
     for o_Item in a_LatestItemList:
-        s_CSVOutput += f"\n{o_Item.s_Name},{o_Item.s_Location},{o_Item.i_InventoryCount},"
-    print(s_CSVOutput)
-    
-    return index(request)
+        s_CSVOutput += f"\n{o_Item.s_Name},{o_Item.s_Location},{o_Item.i_InventoryCount},{o_Item.d_DateAdded}"
+    # Define Django project base directory
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    # Define text file name
+    filename = 'productData.csv'
+    # Define the full file path
+    filepath = BASE_DIR + '/tracker/Downloads/' + filename
+    # Write to the file
+    with open(filepath, 'w') as f:
+        f.write(s_CSVOutput)
+    # Open the file for reading content
+    path = open(filepath, 'r')
+    # Set the mime type
+    mime_type, _ = mimetypes.guess_type(filepath)
+    # Set the return value of the HttpResponse
+    response = HttpResponse(path, content_type=mime_type)
+    # Set the HTTP header for sending to browser
+    response['Content-Disposition'] = "attachment; filename=%s" % filename
+    # Return the response value
+    return response
