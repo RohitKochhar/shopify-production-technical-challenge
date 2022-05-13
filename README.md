@@ -23,7 +23,8 @@ Using replit, this app can be launched by simply pressing the start button and n
 Using Docker to run this app is much easier, simply run:
 
 ```
-docker-compose up
+docker build -t production_challenge .
+docker run -p 0.0.0.0:8000:8000 -t production_challenge
 ```
 
 and navigate to http://localhost:8000/tracker
