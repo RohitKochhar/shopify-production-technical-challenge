@@ -14,7 +14,7 @@
 
 ### replit
 
-The replit for this repository can be found here: https://replit.com/@RohitKochhar/shopify-production-challenge#README.md
+The replit for this repository can be found here: https://replit.com/@RohitKochhar/shopify-production-technical-challenge#.replit
 
 Using replit, this app can be launched by doing the following:
 
