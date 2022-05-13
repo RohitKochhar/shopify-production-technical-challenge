@@ -16,7 +16,12 @@
 
 The replit for this repository can be found here: https://replit.com/@RohitKochhar/shopify-production-challenge#README.md
 
-Using replit, this app can be launched by simply pressing the start button and navigating to https://shopify-production-challenge.rohitkochhar.repl.co/tracker/ in another tab. Note that the in-repl browser will not load the correct url, as it will be missing the /tracker/ suffix.
+Using replit, this app can be launched by doing the following:
+
+1. Press the run button
+2. Navigating to https://shopify-production-challenge.rohitkochhar.repl.co/tracker/ in another tab.
+
+**Note that the in-repl browser will not load the correct url, as it will be missing the /tracker/ suffix.**
 
 ### Docker
 
