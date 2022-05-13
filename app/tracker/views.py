@@ -14,6 +14,7 @@ from datetime import datetime
 from django.contrib import messages
 from django.conf import settings
 from django.http import HttpResponse, Http404
+from django.views.decorators.csrf import csrf_exempt
 import os
 import mimetypes
 # Local imports
@@ -46,6 +47,7 @@ def index(request):
 # Function Description: Creates an item and adds to db 
 # 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+@csrf_exempt        # csrf causes issues in repl.it
 def create(request):
     # Get name and location from the html form
     s_Name      = request.POST["s_Name"]
@@ -64,6 +66,7 @@ def create(request):
 # Function Description: Edit specific item 
 # 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+@csrf_exempt        # csrf causes issues in repl.it
 def edit(request, pk):
     # Get the item in question
     o_Item = get_object_or_404(Item, pk=pk)
@@ -83,6 +86,7 @@ def edit(request, pk):
 # Function Description: Update item from form
 #
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+@csrf_exempt        # csrf causes issues in repl.it
 def update(request, pk):
     # Get the updated values from HTML form
     s_Name      = request.POST["s_Name"]
@@ -105,6 +109,7 @@ def update(request, pk):
 # Function Description: Delete specific item 
 # 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+@csrf_exempt        # csrf causes issues in repl.it
 def delete(request, pk):
     # Retrieve the object, if not found return 404
     o_Item = get_object_or_404(Item, pk=pk)
@@ -119,6 +124,7 @@ def delete(request, pk):
 # Function Description: Exports all product data to csv
 # 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+@csrf_exempt        # csrf causes issues in repl.it
 def export(request):
     a_LatestItemList    = Item.objects.order_by("-d_DateAdded")
     s_CSVOutput = "Item Name, Item Location, Inventory Count, Date Added to Tracking"

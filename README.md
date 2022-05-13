@@ -18,8 +18,8 @@ The replit for this repository can be found here: https://replit.com/@RohitKochh
 
 Using replit, this app can be launched by doing the following:
 
-1. Press the run button
-2. Navigating to https://shopify-production-challenge.rohitkochhar.repl.co/tracker/ in another tab.
+1. Press the run button. Sometimes the run button doesn't seem to trigger the `bash run.sh` script to launch the app. If this is the case, simply enter `bash run.sh` in the repl.it shell directly.
+2. Navigating to [https://shopify-production-challenge.rohitkochhar.repl.co/tracker/ ](https://shopify-production-technical-challenge.rohitkochhar.repl.co/tracker/)in another tab.
 
 **Note that the in-repl browser will not load the correct url, as it will be missing the /tracker/ suffix.**
 
